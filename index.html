@@ -1,451 +1,1529 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="icon" href="img/favicon.png" type="image/png">
-        <title>MeetMe</title>
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="css/bootstrap.css">
-        <link rel="stylesheet" href="vendors/linericon/style.css">
-        <link rel="stylesheet" href="css/font-awesome.min.css">
-        <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
-        <link rel="stylesheet" href="vendors/lightbox/simpleLightbox.css">
-        <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css">
-        <link rel="stylesheet" href="vendors/animate-css/animate.css">
-        <link rel="stylesheet" href="vendors/popup/magnific-popup.css">
-        <link rel="stylesheet" href="vendors/flaticon/flaticon.css">
-        <!-- main css -->
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/responsive.css">
-    </head>
-    <body>
-        
-        <!--================Header Menu Area =================-->
-        <header class="header_area">
-            <div class="main_menu">
-            	<nav class="navbar navbar-expand-lg navbar-light">
-					<div class="container box_1620">
-						<!-- Brand and toggle get grouped for better mobile display -->
-						<a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt="x"></a>
-						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<!-- Collect the nav links, forms, and other content for toggling -->
-						<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-							<ul class="nav navbar-nav menu_nav ml-auto">
-								<li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li> 
-								<li class="nav-item"><a class="nav-link" href="about-us.html">About</a></li>
-								<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-							</ul>
-						</div> 
-					</div>
-            	</nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fazlullah Mamond | Portfolio</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Three.js for 3D effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#6366f1",
+              secondary: "#4f46e5",
+              dark: "#1e1b4b",
+              light: "#f5f5f5",
+            },
+            fontFamily: {
+              sans: ["Poppins", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="font-sans bg-light text-gray-800 overflow-x-hidden">
+    <!-- 3D Background Canvas -->
+    <canvas
+      id="bg-canvas"
+      class="fixed top-0 left-0 w-full h-full -z-10"
+    ></canvas>
+
+    <!-- Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navigation -->
+    <nav
+      class="fixed top-0 w-full z-50 transition-all duration-500"
+      id="navbar"
+    >
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a href="#" class="text-2xl font-bold text-primary"
+          >Mamond<span class="text-dark">.dev</span></a
+        >
+
+        <!-- Mobile menu button -->
+        <div class="md:hidden">
+          <button
+            id="menu-toggle"
+            class="text-dark hover:text-primary focus:outline-none transition-colors"
+          >
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+
+        <!-- Desktop menu -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#home" class="nav-link">Home</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#experience" class="nav-link">Experience</a>
+          <a href="#education" class="nav-link">Education</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#certifications" class="nav-link">Certifications</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+      </div>
+
+      <!-- Mobile menu -->
+      <div
+        id="mobile-menu"
+        class="md:hidden hidden bg-white border-t shadow-lg"
+      >
+        <a
+          href="#home"
+          class="block py-3 px-6 hover:bg-gray-100 transition-colors"
+          >Home</a
+        >
+        <a
+          href="#about"
+          class="block py-3 px-6 hover:bg-gray-100 transition-colors"
+          >About</a
+        >
+        <a
+          href="#experience"
+          class="block py-3 px-6 hover:bg-gray-100 transition-colors"
+          >Experience</a
+        >
+        <a
+          href="#education"
+          class="block py-3 px-6 hover:bg-gray-100 transition-colors"
+          >Education</a
+        >
+        <a
+          href="#skills"
+          class="block py-3 px-6 hover:bg-gray-100 transition-colors"
+          >Skills</a
+        >
+        <a
+          href="#projects"
+          class="block py-3 px-6 hover:bg-gray-100 transition-colors"
+          >Projects</a
+        >
+        <a
+          href="#certifications"
+          class="block py-3 px-6 hover:bg-gray-100 transition-colors"
+          >Certifications</a
+        >
+        <a
+          href="#contact"
+          class="block py-3 px-6 hover:bg-gray-100 transition-colors"
+          >Contact</a
+        >
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      id="home"
+      class="min-h-screen flex items-center relative overflow-hidden"
+    >
+      <div
+        class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-indigo-50 to-white opacity-70"
+      ></div>
+      <div class="container mx-auto px-6 relative z-10">
+        <div class="flex flex-col md:flex-row items-center">
+          <div
+            class="md:w-1/2 mb-12 md:mb-0"
+            data-aos="fade-right"
+            data-aos-duration="1000"
+          >
+            <h1
+              class="text-5xl md:text-7xl font-bold mb-4 text-dark leading-tight mt-10"
+            >
+              Hi, I'm <span class="text-primary">Fazlullah Mamond</span>
+            </h1>
+            <h2 class="text-2xl md:text-3xl font-medium mb-6 text-gray-600">
+              Full Stack Developer
+            </h2>
+            <p class="text-lg text-gray-600 mb-8 max-w-lg">
+              I build exceptional digital experiences with cutting-edge
+              technologies. Passionate about creating clean, efficient, and
+              user-friendly applications.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="#contact" class="btn-primary"> Get In Touch </a>
+              <a href="#projects" class="btn-secondary"> View My Work </a>
             </div>
-        </header>
-        <!--================Header Menu Area =================-->
-        
-        <!--================Home Banner Area =================-->
-        <section class="home_banner_area">
-           	<div class="container box_1620">
-           		<div class="banner_inner d-flex align-items-center">
-					<div class="banner_content">
-						<div class="media">
-							<div class="d-flex">
-								<img src="img/personal.jpg" alt="">
-							</div>
-							<div class="media-body">
-								<div class="personal_text">
-									<h6>Hello Everybody, i am</h6>
-									<h3>Fazlullah Mamond</h3>
-									<h4>Web Developer</h4>
-									<p>Not doing bad, is not the same as doing Good!<br> Spread Love and Peace :)</p>
-									<ul class="list basic_info">
-										<li><a href="#"><i class="lnr lnr-phone-handset"></i> +93 (0)78 9329 312</a></li>
-										<li><a href="#"><i class="lnr lnr-envelope"></i> fazlullahmamond@gmail.com</a></li>
-										<li><a href="#"><i class="lnr lnr-home"></i> Ahmad Shah Baba Mena, Kabul, Afghanistan</a></li>
-									</ul>
-									<ul class="list personal_social">
-										<li><a href="https://www.facebook.com/MAM0ND" target="__blank"><i class="fa fa-facebook"></i></a></li>
-										<li><a href="https://www.linkedin.com/in/fazlullahmamond" target="__blank"><i class="fa fa-linkedin"></i></a></li>
-										<li><a href="https://www.github.com/fazlullahmamond" target="__blank"><i class="fa fa-github"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+            <div class="mt-10 flex space-x-6">
+              <a
+                href="https://github.com/fazlullahmamond"
+                target="_blank"
+                class="social-icon"
+              >
+                <i class="fab fa-github"></i>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/fazlullahmamond/"
+                target="_blank"
+                class="social-icon"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a
+                href="https://www.facebook.com/MAM0ND/"
+                target="_blank"
+                class="social-icon"
+              >
+                <i class="fab fa-facebook"></i>
+              </a>
+              <a href="mailto:fazlullahmamond@gmail.com" class="social-icon">
+                <i class="fas fa-envelope"></i>
+              </a>
             </div>
-        </section>
-        <!--================End Home Banner Area =================-->
-        
-        <!--================Welcome Area =================-->
-        <section class="welcome_area p_120">
-        	<div class="container">
-        		<div class="row welcome_inner">
-					<div class="col-lg-12">
-						<div class="main_title">
-							<h2>What I know</h2>
-							<p>I have Experiences more than one year in the following titles.</p>
-							<p>feel free to contact with me.</p>
-						</div>
-					</div>
+          </div>
+          <div
+            class="md:w-1/2 flex justify-center"
+            data-aos="fade-left"
+            data-aos-duration="1000"
+          >
+            <div class="relative">
+              <div class="hero-image-container">
+                <img
+                  src="assets/image.jpeg"
+                  alt="Fazlullah Mamond"
+                  class="hero-image"
+                />
+              </div>
+              <div
+                class="absolute -bottom-4 -right-4 bg-white shadow-lg rounded-lg py-2 px-4 rotate-3 mb-10"
+              >
+                <p class="text-primary font-medium">5+ Years Experience</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce"
+        >
+          <a href="#about" class="text-primary">
+            <i class="fas fa-chevron-down text-2xl"></i>
+          </a>
+        </div>
+      </div>
+    </section>
 
-					<div class="col-lg-6">
-        				<div class="tools_expert">
-        					<div class="skill_main">
-								<div class="skill_item">
-									<h4>HTML <span class="counter">95</span>%</h4>
-									<div class="progress_br">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</div>
-								</div>
-								<div class="skill_item">
-									<h4>CSS <span class="counter">90</span>%</h4>
-									<div class="progress_br">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</div>
-								</div>
-								<div class="skill_item">
-									<h4>Bootstrap <span class="counter">90</span>%</h4>
-									<div class="progress_br">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</div>
-								</div>
-								<div class="skill_item">
-									<h4>JavaScript <span class="counter">80</span>%</h4>
-									<div class="progress_br">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</div>
-								</div>
-								<div class="skill_item">
-									<h4>jQuery <span class="counter">85</span>%</h4>
-									<div class="progress_br">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-        				</div>
-        			</div>
-        			<div class="col-lg-6">
-        				<div class="tools_expert">
-        					<div class="skill_main">
-								<div class="skill_item">
-									<h4>Laravel <span class="counter">85</span>%</h4>
-									<div class="progress_br">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</div>
-								</div>
-								<div class="skill_item">
-									<h4>Database <span class="counter">90</span>%</h4>
-									<div class="progress_br">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</div>
-								</div>
-								<div class="skill_item">
-									<h4>Data Analysis <span class="counter">75</span>%</h4>
-									<div class="progress_br">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</div>
-								</div>
-								<div class="skill_item">
-									<h4>Data Visualization <span class="counter">80</span>%</h4>
-									<div class="progress_br">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</div>
-								</div>
-								<div class="skill_item">
-									<h4>Machine Learning <span class="counter">75</span>%</h4>
-									<div class="progress_br">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-        				</div>
-        			</div>
-        		</div>
-        	</div>
-        </section>
-        <!--================End Welcome Area =================-->
-        
-        <!--================My Tabs Area =================-->
-        <section class="mytabs_area p_120">
-        	<div class="container">
-        		<div class="tabs_inner">
-					<ul class="nav nav-tabs" id="myTab" role="tablist">
-						<li class="nav-item">
-							<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">My Experiences</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">My Education</a>
-						</li>
-					</ul>
-					<div class="tab-content" id="myTabContent">
-						<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-							<ul class="list">
-								<li>
-									<span></span>
-									<div class="media">
-										<div class="d-flex">
-											<p>November 2020 to present</p>
-										</div>
-										<div class="media-body">
-											<h4>Charity Foundation</h4>
-											<p>Web Developer <br />Kabul, Afghanistan</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<span></span>
-									<div class="media">
-										<div class="d-flex">
-											<p>march 2019 to november 2020</p>
-										</div>
-										<div class="media-body">
-											<h4>Upwork.com</h4>
-											<p>Web Developer <br />kabul, Afghanistan</p>
-										</div>
-									</div>
-								</li>
-								<li>
-								<span></span>
-									<div class="media">
-										<div class="d-flex">
-											<p>November 2018 to 2019</p>
-										</div>
-										<div class="media-body">
-											<h4>BigHub Company</h4>
-											<p>Web Developer <br />Kabul, Afghanistan</p>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div>
-						<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-							<ul class="list">
-								<li>
-									<span></span>
-									<div class="media">
-										<div class="d-flex">
-											<p>2020 to present</p>
-										</div>
-										<div class="media-body">
-											<h4>Online Learning</h4>
-											<p>internet<br />online learning from home</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<span></span>
-									<div class="media">
-										<div class="d-flex">
-											<p>2018 to present</p>
-										</div>
-										<div class="media-body">
-											<h4>Kabul University</h4>
-											<p>Computer Science<br />kabul, Afghanistan</p>
-										</div>
-									</div>
-								</li>
-								<li>
-								<span></span>
-									<div class="media">
-										<div class="d-flex">
-											<p>2018</p>
-										</div>
-										<div class="media-body">
-											<h4>High School</h4>
-											<p>graduate<br />Qiamu-din-</p>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-        		</div>
-        	</div>
-        </section>
-        <!--================End My Tabs Area =================-->
-        
-        <!--================Feature Area =================-->
-        <section class="feature_area p_120">
-        	<div class="container">
-        		<div class="main_title">
-        			<h2>offerings to my clients</h2>
-        		</div>
-        		<div class="feature_inner row">
-        			<div class="col-lg-4 col-md-4">
-        				<div class="feature_item">
-        					<i class="flaticon-city"></i>
-        					<h4>Web Designing</h4>
-        					<p>If you are looking at blank cassettes on the web, you may be very confused at the difference in price. You may see some for as low as $17 each.</p>
-        				</div>
-        			</div>
-        			<div class="col-lg-4 col-md-4">
-        				<div class="feature_item">
-        					<i class="flaticon-skyline"></i>
-        					<h4>Web Development</h4>
-        					<p>If you are looking at blank cassettes on the web, you may be very confused at the difference in price. You may see some for as low as $17 each.</p>
-        				</div>
-        			</div>
-        			<div class="col-lg-4 col-md-4">
-        				<div class="feature_item">
-        					<i class="flaticon-sketch"></i>
-        					<h4>Database Designing</h4>
-        					<p>If you are looking at blank cassettes on the web, you may be very confused at the difference in price. You may see some for as low as $17 each.</p>
-        				</div>
-        			</div>
-        		</div>
-        	</div>
-        </section>
-        <!--================End Feature Area =================-->
-        
-        <!--================Home Gallery Area =================-->
-        <section class="home_gallery_area p_120">
-        	<div class="container">
-        		<div class="main_title">
-        			<h2>Connect with me!</h2>
-        			<p>Who are in extremely love with eco friendly system.</p>
-        		</div>
-<div class="row">
+    <!-- About Section -->
+    <section id="about" class="py-20 relative">
+      <div class="container mx-auto px-6">
+        <div class="section-title" data-aos="fade-up">
+          <h2>About Me</h2>
+          <div class="section-line"></div>
+        </div>
 
-				<div class="col-md-6">
-					<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="fazlullahmamond"><a class="LI-simple-link" href='https://af.linkedin.com/in/fazlullahmamond?trk=profile-badge'>Fazlullah Mamond</a></div>
-				</div>
+        <div class="flex flex-col md:flex-row gap-12 mt-16">
+          <div class="md:w-2/5" data-aos="fade-right" data-aos-duration="1000">
+            <div class="about-image-container">
+              <img
+                src="https://images.unsplash.com/photo-1580927752452-89d86da3fa0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                alt="About Fazlullah Mamond"
+                class="about-image"
+              />
+            </div>
+          </div>
+          <div class="md:w-3/5" data-aos="fade-left" data-aos-duration="1000">
+            <h3 class="text-2xl font-bold mb-4 text-dark">Who am I?</h3>
+            <p class="text-gray-600 mb-6">
+              I am a versatile developer specializing in both web and mobile
+              application development. My expertise spans modern frameworks like
+              <strong>Laravel</strong> and <strong>Django</strong> for backend
+              web development, and <strong>React Native</strong> and
+              <strong>Flutter</strong> for cross-platform mobile app creation.
+            </p>
+            <p class="text-gray-600 mb-6">
+              On the frontend, I’m skilled in <strong>JavaScript</strong>,
+              <strong>Bootstrap</strong>, and <strong>Tailwind CSS</strong>,
+              allowing me to craft responsive and user-friendly interfaces. I
+              also work extensively with modern backend tools and design
+              scalable database structures using <strong>MySQL</strong> and
+              <strong>PostgreSQL</strong>.
+            </p>
+            <p class="text-gray-600 mb-6">
+              I have hands-on experience with <strong>FilamentPHP</strong> for
+              rapid admin panel development and use <strong>Git</strong> and
+              <strong>GitHub</strong> for version control and collaborative
+              coding. I follow best practices to ensure code maintainability and
+              project scalability.
+            </p>
 
-			        <div class="col-md-6">
-				        <div class="github-widget" data-username="fazlullahmamond"></div>
-                                </div>
-</div>
-        	</div>
-        	<div class="container">
-        	</div>
-        </section>
-        <!--================End Home Gallery Area =================-->
-        
-        <!--================Testimonials Area =================-->
-        <section class="testimonials_area p_120">
-        	<div class="container">
-        		<div class="main_title">
-        			<h2>Testimonials</h2>
-				</div>
-        		<div class="testi_inner">
-					<div class="testi_slider owl-carousel">
-						<div class="item">
-							<div class="testi_item">
-								<p>He is one the best web developer I know. He is very kind and I always learn alot from him.</p>
-								<h4>Sabawoon Khan</h4>
-								<a href="#"><i class="fa fa-star"></i></a>
-								<a href="#"><i class="fa fa-star"></i></a>
-								<a href="#"><i class="fa fa-star"></i></a>
-								<a href="#"><i class="fa fa-star"></i></a>
-								<a href="#"><i class="fa fa-star"></i></a>
-							</div>
-						</div>
-						<div class="item">
-							<div class="testi_item">
-								<p>Fazlullah Mamond is the best person I know. He is very hard working and he learns quickly.</p>
-								<h4>Baseer Malikzai</h4>
-								<a href="#"><i class="fa fa-star"></i></a>
-								<a href="#"><i class="fa fa-star"></i></a>
-								<a href="#"><i class="fa fa-star"></i></a>
-								<a href="#"><i class="fa fa-star"></i></a>
-								<a href="#"><i class="fa fa-star-half-o"></i></a>
-							</div>
-						</div>
-						<div class="item">
-							<div class="testi_item">
-								<p>Fazlullah Mamond is my best friend. I always learn alot from him, and he is so kind to me.</p>
-								<h4>Adalatullah Hemat</h4>
-								<a href="#"><i class="fa fa-star"></i></a>
-								<a href="#"><i class="fa fa-star"></i></a>
-								<a href="#"><i class="fa fa-star"></i></a>
-								<a href="#"><i class="fa fa-star"></i></a>
-								<a href="#"><i class="fa fa-star-half-o"></i></a>
-							</div>
-						</div>
-					</div>
-        		</div>
-        	</div>
-        </section>
-        <!--================End Testimonials Area =================-->
-        
-        <!--================Footer Area =================-->
-        <footer class="footer_area p_120">
-        	<div class="container">
-        		<div class="row footer_inner">
-        			<div class="col-md-6">
-        				<aside class="f_widget ab_widget">
-        					<div class="f_title">
-        						<h3>About Me</h3>
-        					</div>
-        					<p>Do you want to be even more successful? Learn to love learning and growth. The more effort you put into improving your skills,</p>
-        				</aside>
-        			</div>
-        			<div class="col-md-6">
-        				<aside class="f_widget social_widget">
-        					<div class="f_title">
-        						<h3>Follow Me</h3>
-        					</div>
-        					<p>Let us be social</p>
-        					<ul class="list">
-        						<li><a href="https://www.facebook.com/MAM0ND" target="__blank"><i class="fa fa-facebook"></i></a></li>
-        						<li><a href="https://www.linkedin.com/in/fazlullahmamond" target="__blank"><i class="fa fa-linkedin"></i></a></li>
-								<li><a href="https://www.github.com/fazlullahmamond" target="__blank"><i class="fa fa-github"></i></a></li>
-        					</ul>
-        				</aside>
-        			</div>
-        		</div>
-        	</div>
-        </footer>
-        <!--================End Footer Area =================-->
-        
-        
-        
-        
-        
-        
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="js/popper.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/stellar.js"></script>
-		<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
-<script src="https://unpkg.com/github-card@1.2.1/dist/widget.js"></script>
-        <script src="vendors/lightbox/simpleLightbox.min.js"></script>
-        <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
-        <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
-        <script src="vendors/isotope/isotope.pkgd.min.js"></script>
-        <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-        <script src="vendors/popup/jquery.magnific-popup.min.js"></script>
-        <script src="js/jquery.ajaxchimp.min.js"></script>
-        <script src="vendors/counter-up/jquery.waypoints.min.js"></script>
-        <script src="vendors/counter-up/jquery.counterup.min.js"></script>
-        <script src="js/mail-script.js"></script>
-        <script src="js/theme.js"></script>
-    </body>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <div class="flex items-center">
+                <i class="fas fa-user text-primary mr-3"></i>
+                <div>
+                  <p class="text-sm text-gray-500">Name</p>
+                  <p class="font-medium">Fazlullah Mamond</p>
+                </div>
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-envelope text-primary mr-3"></i>
+                <div>
+                  <p class="text-sm text-gray-500">Email</p>
+                  <p class="font-medium">fazlullahmamond@gmail.com</p>
+                </div>
+              </div>
+            </div>
+
+            <a href="assets/cv.pdf" class="btn-primary">
+              Download Resume <i class="fas fa-download ml-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-gray-50 relative">
+      <div class="container mx-auto px-6">
+        <div class="section-title" data-aos="fade-up">
+          <h2>Work Experience</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="mt-16 relative">
+          <!-- Timeline line -->
+          <div
+            class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-primary opacity-20"
+          ></div>
+
+          <!-- Experience Items -->
+          <div class="timeline-container">
+            <!-- Experience 1 -->
+            <div
+              class="timeline-item"
+              data-aos="fade-right"
+              data-aos-duration="1000"
+            >
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">Jan 2025 – Present</div>
+              <div class="timeline-content">
+                <h3 class="text-xl font-bold text-dark">
+                  Full Stack Web Developer
+                </h3>
+                <p class="text-primary font-medium">
+                  Afghan Cosmos | Kabul, Afghanistan
+                </p>
+                <p class="text-gray-600 mt-2">
+                  Develop front‑end and back‑end components using React and
+                  Django for internal and client‑facing applications.
+                  Collaborate with UI/UX designers and product managers to
+                  deliver user‑centric experiences while ensuring clean,
+                  testable code and optimal performance.
+                </p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="tech-tag">React</span>
+                  <span class="tech-tag">Django</span>
+                  <span class="tech-tag">Python</span>
+                  <span class="tech-tag">SQL</span>
+                  <span class="tech-tag">Automated Testing</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Experience 2 -->
+            <div
+              class="timeline-item"
+              data-aos="fade-left"
+              data-aos-duration="1000"
+            >
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">Feb 2024 – Present</div>
+              <div class="timeline-content">
+                <h3 class="text-xl font-bold text-dark">
+                  Web Developer & Digital Officer (Remote)
+                </h3>
+                <p class="text-primary font-medium">
+                  Eye Media Group | Virginia, USA
+                </p>
+                <p class="text-gray-600 mt-2">
+                  Built and maintained the company website (PHP/WordPress) and a
+                  cross‑platform mobile app (React Native). Managed social‑media
+                  strategy, optimized SEO, and used analytics to drive
+                  engagement.
+                </p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="tech-tag">PHP</span>
+                  <span class="tech-tag">WordPress</span>
+                  <span class="tech-tag">React Native</span>
+                  <span class="tech-tag">SEO</span>
+                  <span class="tech-tag">Analytics</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Experience 3 -->
+            <div
+              class="timeline-item"
+              data-aos="fade-right"
+              data-aos-duration="1000"
+            >
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">Jan 2024 – May 2024</div>
+              <div class="timeline-content">
+                <h3 class="text-xl font-bold text-dark">Mentor</h3>
+                <p class="text-primary font-medium">
+                  OSID (UNDP Project) | Kabul, Afghanistan
+                </p>
+                <p class="text-gray-600 mt-2">
+                  Coached Afghan women and youth in freelancing skills and
+                  capacity building. Developed training materials and delivered
+                  workshops to empower sustainable economic development.
+                </p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="tech-tag">Mentorship</span>
+                  <span class="tech-tag">Workshops</span>
+                  <span class="tech-tag">Curriculum Design</span>
+                  <span class="tech-tag">Freelancing</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Experience 4 -->
+            <div
+              class="timeline-item"
+              data-aos="fade-left"
+              data-aos-duration="1000"
+            >
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">Jan 2023 – Dec 2023</div>
+              <div class="timeline-content">
+                <h3 class="text-xl font-bold text-dark">Data Analyst</h3>
+                <p class="text-primary font-medium">
+                  Ramaki Group of Companies | Kabul, Afghanistan
+                </p>
+                <p class="text-gray-600 mt-2">
+                  Analyzed large datasets with Python (NumPy, Pandas), SQL, and
+                  Excel to extract actionable insights. Built statistical models
+                  and dashboards to inform business decisions.
+                </p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="tech-tag">Python</span>
+                  <span class="tech-tag">Pandas</span>
+                  <span class="tech-tag">NumPy</span>
+                  <span class="tech-tag">SQL</span>
+                  <span class="tech-tag">Excel</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Experience 5 -->
+            <div
+              class="timeline-item"
+              data-aos="fade-right"
+              data-aos-duration="1000"
+            >
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">Nov 2021 – Nov 2022</div>
+              <div class="timeline-content">
+                <h3 class="text-xl font-bold text-dark">Web Developer</h3>
+                <p class="text-primary font-medium">
+                  Khan‑Poor American Charity Corp | Kabul, Afghanistan
+                </p>
+                <p class="text-gray-600 mt-2">
+                  Developed and enhanced WordPress‑based websites to improve
+                  functionality and user engagement. Implemented new features to
+                  optimize performance and monetization.
+                </p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="tech-tag">PHP</span>
+                  <span class="tech-tag">WordPress</span>
+                  <span class="tech-tag">JavaScript</span>
+                  <span class="tech-tag">HTML/CSS</span>
+                  <span class="tech-tag">Git</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Experience 6 -->
+            <div
+              class="timeline-item"
+              data-aos="fade-left"
+              data-aos-duration="1000"
+            >
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">Sep 2019 – Sep 2021</div>
+              <div class="timeline-content">
+                <h3 class="text-xl font-bold text-dark">Web Developer</h3>
+                <p class="text-primary font-medium">
+                  Imran Charity Foundation | Kabul, Afghanistan
+                </p>
+                <p class="text-gray-600 mt-2">
+                  Architected and maintained a Laravel‑based management system,
+                  boosting operational efficiency. Monitored performance and
+                  security while implementing feature enhancements.
+                </p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="tech-tag">PHP</span>
+                  <span class="tech-tag">Laravel</span>
+                  <span class="tech-tag">MySQL</span>
+                  <span class="tech-tag">Security</span>
+                  <span class="tech-tag">Performance</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 relative">
+      <div class="container mx-auto px-6">
+        <div class="section-title" data-aos="fade-up">
+          <h2>Education</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Bachelor of Computer Science -->
+          <div
+            class="education-card"
+            data-aos="flip-left"
+            data-aos-duration="1000"
+          >
+            <div class="education-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-dark">
+                Bachelor of Computer Science
+              </h3>
+              <p class="text-primary font-medium">
+                Information Systems | Kabul University
+              </p>
+              <p class="text-gray-500 mt-1">Aug 2018 – Dec 2022</p>
+              <div class="mt-4 flex justify-between items-center">
+                <span class="text-gray-600">Kabul, Afghanistan</span>
+              </div>
+              <p class="text-gray-600 mt-4">
+                Completed a rigorous curriculum covering database design,
+                algorithms, and software engineering.
+              </p>
+            </div>
+          </div>
+
+          <!-- High School Diploma -->
+          <div
+            class="education-card"
+            data-aos="flip-right"
+            data-aos-duration="1000"
+          >
+            <div class="education-icon">
+              <i class="fas fa-school"></i>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-dark">High School Diploma</h3>
+              <p class="text-primary font-medium">
+                Qiamuddin Khadim High School
+              </p>
+              <p class="text-gray-500 mt-1">Jan 2005 – Dec 2017</p>
+              <div class="mt-4 flex justify-between items-center">
+                <span class="text-gray-600">Kabul, Afghanistan</span>
+              </div>
+              <p class="text-gray-600 mt-4">
+                Graduated with strong emphasis on science and mathematics.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-50 relative">
+      <div class="container mx-auto px-6">
+        <div class="section-title" data-aos="fade-up">
+          <h2>Skills</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="mt-16">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <!-- Technical Skills -->
+            <div data-aos="fade-right" data-aos-duration="1000">
+              <h3 class="text-2xl font-bold mb-6 text-dark">
+                Technical Skills
+              </h3>
+
+              <!-- Web & Mobile -->
+              <div class="mb-8">
+                <h4 class="text-lg font-semibold mb-4 text-primary">
+                  Web & Mobile
+                </h4>
+                <div class="space-y-4">
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">React Native</span>
+                      <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 90%"></div>
+                    </div>
+                  </div>
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">WordPress</span>
+                      <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 85%"></div>
+                    </div>
+                  </div>
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">UI/UX Design</span>
+                      <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 80%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Backend & APIs -->
+              <div class="mb-8">
+                <h4 class="text-lg font-semibold mb-4 text-primary">
+                  Backend & APIs
+                </h4>
+                <div class="space-y-4">
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">PHP</span>
+                      <span>95%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 95%"></div>
+                    </div>
+                  </div>
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">Laravel</span>
+                      <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 90%"></div>
+                    </div>
+                  </div>
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">FastAPI</span>
+                      <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 80%"></div>
+                    </div>
+                  </div>
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">Python</span>
+                      <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 90%"></div>
+                    </div>
+                  </div>
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">API Integration</span>
+                      <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 85%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Database & Data -->
+              <div>
+                <h4 class="text-lg font-semibold mb-4 text-primary">
+                  Database & Data
+                </h4>
+                <div class="space-y-4">
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">MySQL / SQL</span>
+                      <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 90%"></div>
+                    </div>
+                  </div>
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">NumPy / Pandas</span>
+                      <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 85%"></div>
+                    </div>
+                  </div>
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">Data Analysis</span>
+                      <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 80%"></div>
+                    </div>
+                  </div>
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">Data Visualization</span>
+                      <span>75%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 75%"></div>
+                    </div>
+                  </div>
+                  <div class="skill-item">
+                    <div class="flex justify-between mb-1">
+                      <span class="font-medium">Machine Learning</span>
+                      <span>70%</span>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-progress" style="width: 70%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tools & Soft Skills -->
+            <div data-aos="fade-left" data-aos-duration="1000">
+              <!-- Tools & Technologies -->
+              <h3 class="text-2xl font-bold mb-6 text-dark">
+                Tools & Technologies
+              </h3>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10">
+                <div class="tool-item">
+                  <i class="fab fa-git-alt"></i>
+                  <span>Git</span>
+                </div>
+                <div class="tool-item">
+                  <i class="fab fa-github"></i>
+                  <span>GitHub</span>
+                </div>
+                <div class="tool-item">
+                  <i class="fab fa-aws"></i>
+                  <span>AWS</span>
+                </div>
+                <div class="tool-item">
+                  <i class="fas fa-search"></i>
+                  <span>SEO</span>
+                </div>
+                <div class="tool-item">
+                  <i class="fab fa-facebook-messenger"></i>
+                  <span>Social Media</span>
+                </div>
+                <div class="tool-item">
+                  <i class="fas fa-sync-alt"></i>
+                  <span>Agile</span>
+                </div>
+                <div class="tool-item">
+                  <i class="fas fa-robot"></i>
+                  <span>Automation</span>
+                </div>
+                <div class="tool-item">
+                  <i class="fas fa-project-diagram"></i>
+                  <span>Project Management</span>
+                </div>
+              </div>
+
+              <!-- Soft Skills -->
+              <h3 class="text-2xl font-bold mb-6 text-dark">Soft Skills</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="soft-skill">
+                  <div class="soft-skill-icon">
+                    <i class="fas fa-comments"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">Communication</h4>
+                    <p class="text-gray-600">
+                      Clear and effective with team members and clients
+                    </p>
+                  </div>
+                </div>
+                <div class="soft-skill">
+                  <div class="soft-skill-icon">
+                    <i class="fas fa-clock"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">Time Management</h4>
+                    <p class="text-gray-600">
+                      Efficient prioritization and meeting deadlines
+                    </p>
+                  </div>
+                </div>
+                <div class="soft-skill">
+                  <div class="soft-skill-icon">
+                    <i class="fas fa-lightbulb"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">Problem Solving</h4>
+                    <p class="text-gray-600">
+                      Analytical approach to technical challenges
+                    </p>
+                  </div>
+                </div>
+                <div class="soft-skill">
+                  <div class="soft-skill-icon">
+                    <i class="fas fa-users"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">Teamwork</h4>
+                    <p class="text-gray-600">
+                      Collaborative work in diverse teams
+                    </p>
+                  </div>
+                </div>
+                <div class="soft-skill">
+                  <div class="soft-skill-icon">
+                    <i class="fas fa-brain"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">Creativity</h4>
+                    <p class="text-gray-600">
+                      Innovative and resourceful thinking
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 relative">
+      <div class="container mx-auto px-6">
+        <div class="section-title" data-aos="fade-up">
+          <h2>Projects</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="mt-8 mb-12 flex justify-center">
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="web">Web Apps</button>
+            <button class="filter-btn" data-filter="mobile">Mobile</button>
+          </div>
+        </div>
+
+        <div
+          class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 projects-container"
+        >
+          <!-- Tailor Master -->
+          <div
+            class="project-item"
+            data-category="web"
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+          >
+            <div class="project-card">
+              <div class="project-image">
+                <img src="assets/tailor.png" alt="Tailor Master" />
+                <div class="project-overlay">
+                  <a
+                    href="https://tailor.afghansystem.com/"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <i class="fas fa-link"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-dark">Tailor Master</h3>
+                <p class="text-gray-600 mt-2">
+                  Stores and organizes customer measurements and order details
+                  for easy access and tracking. Facilitates order tracking,
+                  invoicing, and payment management to ensure smooth
+                  transactions.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="tech-tag">PHP</span>
+                  <span class="tech-tag">Laravel</span>
+                  <span class="tech-tag">MySQL</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tour.af -->
+          <div
+            class="project-item"
+            data-category="web"
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+            data-aos-delay="100"
+          >
+            <div class="project-card">
+              <div class="project-image">
+                <img src="assets/tour.png" alt="Tour.af" />
+                <div class="project-overlay">
+                  <a
+                    href="https://tour.af/"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <i class="fas fa-link"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-dark">Tour.af</h3>
+                <p class="text-gray-600 mt-2">
+                  Built dynamic, user‑friendly websites using PHP and Laravel
+                  for robust back‑end functionality. Implemented instant job
+                  alerts to keep candidates up‑to‑date. Integrated a blog for
+                  content management and a date converter for enhanced UX.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="tech-tag">PHP</span>
+                  <span class="tech-tag">Laravel</span>
+                  <span class="tech-tag">SEO</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Talents.af -->
+          <div
+            class="project-item"
+            data-category="web"
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+            data-aos-delay="200"
+          >
+            <div class="project-card">
+              <div class="project-image">
+                <img src="assets/talents.png" alt="Talents.af" />
+                <div class="project-overlay">
+                  <a
+                    href="https://talents.af/"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <i class="fas fa-link"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-dark">Talents.af</h3>
+                <p class="text-gray-600 mt-2">
+                  Built with Laravel for a secure, scalable job‑seeker platform.
+                  Responsive, visually appealing front‑end ensures seamless UX.
+                  Users can update education, certifications, and profile data
+                  instantly.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="tech-tag">PHP</span>
+                  <span class="tech-tag">Laravel</span>
+                  <span class="tech-tag">Responsive</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Andalus Fresh Fish -->
+          <div
+            class="project-item"
+            data-category="web"
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+          >
+            <div class="project-card">
+              <div class="project-image">
+                <img src="assets/andalus.png" alt="Andalus Fresh Fish" />
+                <div class="project-overlay">
+                  <a
+                    href="https://andalusfreshfish.nl/"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <i class="fas fa-link"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-dark">Andalus Fresh Fish</h3>
+                <p class="text-gray-600 mt-2">
+                  Developed with FilamentPHP to provide an intuitive restaurant
+                  interface. Integrated online ordering for customer
+                  convenience. Streamlined order management, inventory tracking,
+                  and reporting via an admin MIS.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="tech-tag">PHP</span>
+                  <span class="tech-tag">FilamentPHP</span>
+                  <span class="tech-tag">MySQL</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Doctor‑Phone -->
+          <div
+            class="project-item"
+            data-category="mobile"
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+            data-aos-delay="0"
+          >
+            <div class="project-card hover:shadow-lg transition-shadow">
+              <div class="project-image relative">
+                <img
+                  src="assets/masjid.png"
+                  alt="Ummah Masjid Finder"
+                  class="w-full h-48 object-cover rounded-t-lg"
+                />
+                <div
+                  class="project-overlay flex justify-center items-center space-x-2"
+                >
+                  <a
+                    href="https://apps.apple.com/us/app/ummah-masjid-finder/id6744619065"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <i class="fas fa-link"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-dark mb-2">
+                  Ummah Masjid Finder
+                </h3>
+                <p class="text-gray-600 mt-2">
+                  Discover nearby Masjids with ease, find the accurate Qibla
+                  direction, and stay connected to your daily prayers no matter
+                  where you are. This app ensures you never miss a prayer by
+                  providing timely reminders and a seamless user experience for
+                  Muslims around the globe.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="tech-tag">React Native</span>
+                  <span class="tech-tag">iOS</span>
+                  <span class="tech-tag">CoreLocation</span>
+                  <span class="tech-tag">MapKit</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Oscar Pizza -->
+          <div
+            class="project-item"
+            data-category="mobile"
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+            data-aos-delay="200"
+          >
+            <div class="project-card">
+              <div class="project-image">
+                <img src="assets/oscar.png" alt="Oscar Pizza" />
+                <div class="project-overlay">
+                  <a
+                    href="https://oscarlimerick.com/"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <i class="fas fa-link"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-dark">Oscar Pizza</h3>
+                <p class="text-gray-600 mt-2">
+                  Created with Laravel (web) and Flutter (mobile). Integrated
+                  online ordering and inventory tracking for a smooth process.
+                  Multi‑language support and live chat for enhanced customer
+                  interaction.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="tech-tag">Laravel</span>
+                  <span class="tech-tag">Flutter</span>
+                  <span class="tech-tag">Multilingual</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 text-center">
+          <a
+            href="https://github.com/Fazlullahmamond?tab=repositories"
+            class="btn-primary"
+          >
+            View All Projects <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-20 bg-gray-50 relative">
+      <div class="container mx-auto px-6">
+        <div class="section-title" data-aos="fade-up">
+          <h2>Certifications</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Certification 1 -->
+          <div
+            class="certification-card"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-delay="0"
+          >
+            <div class="certification-logo">
+              <img
+                src="assets/ml_python.jpeg"
+                alt="Machine Learning with Python"
+                class="w-full h-40 object-cover rounded-t-lg"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-dark">
+                Machine Learning with Python
+              </h3>
+              <p class="text-primary font-medium">Coursera</p>
+              <p class="text-gray-600 mt-2">
+                Covers key ML algorithms and workflows using scikit‑learn.
+              </p>
+              <a
+                href="https://www.coursera.org/account/accomplishments/verify/K7A4YXKNWNNN"
+                class="mt-4 inline-block text-primary hover:underline"
+                target="_blank"
+                rel="noopener"
+              >
+                View Certificate <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Certification 2 -->
+          <div
+            class="certification-card"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-delay="100"
+          >
+            <div class="certification-logo">
+              <img
+                src="assets/ml_online.jpeg"
+                alt="Machine Learning"
+                class="w-full h-40 object-cover rounded-t-lg"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-dark">Machine Learning</h3>
+              <p class="text-primary font-medium">Coursera</p>
+              <p class="text-gray-600 mt-2">
+                Explores neural networks, clustering, and real‑world ML
+                applications.
+              </p>
+              <a
+                href="https://www.coursera.org/account/accomplishments/verify/7XR6THEANE35"
+                class="mt-4 inline-block text-primary hover:underline"
+                target="_blank"
+                rel="noopener"
+              >
+                View Certificate <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Certification 3 -->
+          <div
+            class="certification-card"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-delay="200"
+          >
+            <div class="certification-logo">
+              <img
+                src="assets/datascience.jpeg"
+                alt="Python for Data Science, AI & Development"
+                class="w-full h-40 object-cover rounded-t-lg"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-dark">
+                Python for Data Science, AI & Development
+              </h3>
+              <p class="text-primary font-medium">Coursera</p>
+              <p class="text-gray-600 mt-2">
+                Hands‑on with data cleaning, visualization, and ML model
+                building.
+              </p>
+              <a
+                href="https://www.coursera.org/account/accomplishments/verify/42Y7FNBJ5NLH"
+                class="mt-4 inline-block text-primary hover:underline"
+                target="_blank"
+                rel="noopener"
+              >
+                View Certificate <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Certification 4 -->
+          <div
+            class="certification-card"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-delay="300"
+          >
+            <div class="certification-logo">
+              <img
+                src="assets/react.jpg"
+                alt="React – The Complete Guide"
+                class="w-full h-40 object-cover rounded-t-lg"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-dark">
+                React – The Complete Guide
+              </h3>
+              <p class="text-primary font-medium">Udemy</p>
+              <p class="text-gray-600 mt-2">
+                Mastered React hooks, state management, routing, and context
+                API.
+              </p>
+              <a
+                href="https://www.udemy.com/certificate/UC-cc38beba-e268-44d8-9569-b1df1b2dab99/"
+                class="mt-4 inline-block text-primary hover:underline"
+                target="_blank"
+                rel="noopener"
+              >
+                View Certificate <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Certification 5 -->
+          <div
+            class="certification-card"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-delay="400"
+          >
+            <div class="certification-logo">
+              <img
+                src="assets/javascript.jpg"
+                alt="The Complete JavaScript Course"
+                class="w-full h-40 object-cover rounded-t-lg"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-dark">
+                The Complete JavaScript Course
+              </h3>
+              <p class="text-primary font-medium">Udemy</p>
+              <p class="text-gray-600 mt-2">
+                Deep dive into ES6+, asynchronous JS, and modern best practices.
+              </p>
+              <a
+                href="https://www.udemy.com/certificate/UC-3b862c23-054b-4368-8faf-5057d6d96753/"
+                class="mt-4 inline-block text-primary hover:underline"
+                target="_blank"
+                rel="noopener"
+              >
+                View Certificate <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Certification 6 -->
+          <div
+            class="certification-card"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-delay="500"
+          >
+            <div class="certification-logo">
+              <img
+                src="assets/front.jpg"
+                alt="Front‑End Web Development Guide"
+                class="w-full h-40 object-cover rounded-t-lg"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-dark">
+                Front‑End Web Development Guide
+              </h3>
+              <p class="text-primary font-medium">Udemy</p>
+              <p class="text-gray-600 mt-2">
+                Comprehensive coverage of HTML, CSS, and JavaScript for
+                responsive design.
+              </p>
+              <a
+                href="https://www.udemy.com/certificate/UC-c549d54e-cf7e-458a-b766-4d7f2eb8e833/"
+                class="mt-4 inline-block text-primary hover:underline"
+                target="_blank"
+                rel="noopener"
+              >
+                View Certificate <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative">
+      <div class="container mx-auto px-6">
+        <div class="section-title" data-aos="fade-up">
+          <h2>Get In Touch</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="mt-16 flex flex-col md:flex-row gap-12">
+          <div class="md:w-1/2" data-aos="fade-right" data-aos-duration="1000">
+            <h3 class="text-2xl font-bold mb-6 text-dark">
+              Contact Information
+            </h3>
+            <p class="text-gray-600 mb-8">
+              Feel free to reach out if you're looking for a developer, have a
+              question, or just want to connect.
+            </p>
+
+            <div class="space-y-6">
+              <div class="contact-info flex items-start space-x-4">
+                <div class="contact-icon text-primary text-xl">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Location</h4>
+                  <p class="text-gray-600">Kabul, Afghanistan</p>
+                </div>
+              </div>
+
+              <div class="contact-info flex items-start space-x-4">
+                <div class="contact-icon text-primary text-xl">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Email</h4>
+                  <p class="text-gray-600">fazlullahmamond@gmail.com</p>
+                </div>
+              </div>
+
+              <div class="contact-info flex items-start space-x-4">
+                <div class="contact-icon text-primary text-xl">
+                  <i class="fas fa-phone"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Phone</h4>
+                  <p class="text-gray-600">+93 789 329 312</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-10">
+              <h4 class="text-xl font-semibold mb-4 text-dark">Follow Me</h4>
+              <div class="mt-10 flex space-x-6">
+                <a
+                  href="https://github.com/fazlullahmamond"
+                  target="_blank"
+                  class="social-icon"
+                >
+                  <i class="fab fa-github"></i>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/fazlullahmamond/"
+                  target="_blank"
+                  class="social-icon"
+                >
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a
+                  href="https://www.facebook.com/MAM0ND/"
+                  target="_blank"
+                  class="social-icon"
+                >
+                  <i class="fab fa-facebook"></i>
+                </a>
+                <a href="mailto:fazlullahmamond@gmail.com" class="social-icon">
+                  <i class="fas fa-envelope"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="md:w-1/2" data-aos="fade-left" data-aos-duration="1000">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+              <h3 class="text-2xl font-bold mb-6 text-dark">
+                Send Me a Message
+              </h3>
+              <form id="contact-form">
+                <div class="mb-6">
+                  <label
+                    for="name"
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    >Name</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    class="form-input"
+                    placeholder="Your Name"
+                    required
+                  />
+                </div>
+                <div class="mb-6">
+                  <label
+                    for="email"
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    >Email</label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    class="form-input"
+                    placeholder="Your Email"
+                    required
+                  />
+                </div>
+                <div class="mb-6">
+                  <label
+                    for="subject"
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    >Subject</label
+                  >
+                  <input
+                    type="text"
+                    id="subject"
+                    class="form-input"
+                    placeholder="Subject"
+                    required
+                  />
+                </div>
+                <div class="mb-6">
+                  <label
+                    for="message"
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    >Message</label
+                  >
+                  <textarea
+                    id="message"
+                    rows="5"
+                    class="form-input"
+                    placeholder="Your Message"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn-primary w-full">
+                  Send Message <i class="fas fa-paper-plane ml-2"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-6 md:mb-0 text-center md:text-left">
+            <a href="#" class="text-2xl font-bold">
+              Mamond<span class="text-primary">.dev</span>
+            </a>
+            <p class="text-gray-400 mt-2">Full Stack Developer</p>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="#home" class="footer-link">Home</a>
+            <a href="#about" class="footer-link">About</a>
+            <a href="#experience" class="footer-link">Experience</a>
+            <a href="#education" class="footer-link">Education</a>
+            <a href="#skills" class="footer-link">Skills</a>
+            <a href="#projects" class="footer-link">Projects</a>
+            <a href="#certifications" class="footer-link">Certifications</a>
+            <a href="#contact" class="footer-link">Contact</a>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-400 text-center md:text-left">
+            © 2025 Fazlullah Mamond. All rights reserved.
+          </p>
+          <div class="flex space-x-4 mt-4 md:mt-0">
+            <a
+              href="https://github.com/fazlullahmamond"
+              target="_blank"
+              class="social-icon-sm"
+            >
+              <i class="fab fa-github"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/fazlullahmamond/"
+              target="_blank"
+              class="social-icon-sm"
+            >
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a
+              href="https://www.facebook.com/MAM0ND/"
+              target="_blank"
+              class="social-icon-sm"
+            >
+              <i class="fab fa-facebook"></i>
+            </a>
+            <a href="mailto:fazlullahmamond@gmail.com" class="social-icon-sm">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" class="back-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+  </body>
 </html>
